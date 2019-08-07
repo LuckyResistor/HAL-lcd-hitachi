@@ -65,8 +65,7 @@ class HMCPConnection : public HConnection
 public:
     /// Create a new connection.
     ///
-    HMCPConnection(MCP23008 *io) : _io(io) {
-    }
+    explicit constexpr HMCPConnection(MCP23008 *io) : _io(io) {}
     
 private:
     /// Get the mask for the data pins.

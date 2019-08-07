@@ -21,6 +21,7 @@
 
 
 #include "hal-common/Flags.hpp"
+#include "hal-common/BitTools.hpp"
 #include "hal-lcd-character/CharacterDisplay.hpp"
 
 
@@ -94,23 +95,23 @@ public: // Low-Level interface.
     /// The commands and flags for the display.
     ///
     enum class Command : uint8_t {
-        Clear = (1<<0),
-        Home = (1<<1),
-        EntryMode = (1<<2),
-        EntryModeIncrement = (1<<1),
-        EntryModeShift = (1<<0),
-        Enable = (1<<3),
-        EnableDisplay = (1<<2),
-        EnableCursor = (1<<1),
-        EnableBlink = (1<<0),
-        Shift = (1<<4),
-        ShiftDisplay = (1<<3),
-        ShiftRight = (1<<2),
-        Function = (1<<5),
-        FunctionTwoLines = (1<<3),
-        Function11Dots = (1<<2),
-        CGAddress = (1<<6),
-        DDAddress = (1<<7)
+        Clear = oneBit8(0),
+        Home = oneBit8(1),
+        EntryMode = oneBit8(2),
+        EntryModeIncrement = oneBit8(1),
+        EntryModeShift = oneBit8(0),
+        Enable = oneBit8(3),
+        EnableDisplay = oneBit8(2),
+        EnableCursor = oneBit8(1),
+        EnableBlink = oneBit8(0),
+        Shift = oneBit8(4),
+        ShiftDisplay = oneBit8(3),
+        ShiftRight = oneBit8(2),
+        Function = oneBit8(5),
+        FunctionTwoLines = oneBit8(3),
+        Function11Dots = oneBit8(2),
+        CGAddress = oneBit8(6),
+        DDAddress = oneBit8(7)
     };
     LR_DECLARE_FLAGS(Command, CommandMask);
 
