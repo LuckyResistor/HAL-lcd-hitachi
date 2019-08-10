@@ -45,7 +45,7 @@ class AfBackConnection : public HMCPConnection<MCP23008::Pin::GPA1, MCP23008::Pi
 public:
     /// Create a new instance for the connection.
     ///
-    inline AfBackConnection(MCP23008 *io) : HMCPConnection(io) {}
+    inline explicit AfBackConnection(MCP23008 *io) : HMCPConnection(io) {}
 };
 
         

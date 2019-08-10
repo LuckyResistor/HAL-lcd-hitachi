@@ -34,7 +34,8 @@ HDisplay::HDisplay(
 :
     _connection(connection),
     _layoutColumns(layoutColumns),
-    _layoutRows(layoutRows)
+    _layoutRows(layoutRows),
+    _state({})
 {
 }
 
@@ -56,7 +57,7 @@ HDisplay::Status HDisplay::initialize()
     // Disable the display.
     cmd = Command::Enable;
     if (hasError(_connection->sendCommand(cmd))) return Status::Error;
-    // Clear the dispplay
+    // Clear the display
     cmd = Command::Clear;
     if (hasError(_connection->sendCommand(cmd))) return Status::Error;
     Timer::delay(3_ms);
@@ -108,7 +109,7 @@ uint8_t HDisplay::getAddressForPosition(uint8_t x, uint8_t y)
         return x + (y == 0 ? 0 : 40);
     } else {
         // For 4 line displays, lines 3+4 are an extension of the first two lines.
-        return x + ((y&1)==0 ? 0 : 40) + ((y&2)==0 ? 0 : _layoutColumns);
+        return x + ((y & 1u) == 0 ? 0 : 40) + ((y & 2u) == 0 ? 0 : _layoutColumns);
     }
 }
 
@@ -168,7 +169,17 @@ HDisplay::Status HDisplay::writeText(const String &text)
     return Status::Success;
 }
 
-    
+
+HDisplay::Status HDisplay::writeText(const char *text)
+{
+    while (*text != '\0') {
+        writeChar(*text);
+        ++text;
+    }
+    return Status::Success;
+}
+
+
 HDisplay::Status HDisplay::sendEnabledCommand()
 {
     CommandMask cmd = Command::Enable;

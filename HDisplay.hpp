@@ -61,9 +61,9 @@ public:
     /// @param layoutColumns The number of columns of the display (8-40).
     ///
     HDisplay(
-        HConnection* const connection,
-        const uint8_t layoutRows,
-        const uint8_t layoutColumns);
+        HConnection* connection,
+        uint8_t layoutRows,
+        uint8_t layoutColumns);
 
 public:
     /// Initialize the display.
@@ -82,6 +82,7 @@ public: // Implement CharacterDisplay.
     Status setCursor(uint8_t x, uint8_t y) override;
     Status writeChar(char c) override;
     Status writeText(const String &text) override;
+    Status writeText(const char *text) override;
     Status setEnabled(bool enabled) override;
     Status setCursorMode(CursorMode mode) override;
     Status setBacklightEnabled(bool enabled) override;
