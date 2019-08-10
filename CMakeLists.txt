@@ -8,6 +8,5 @@ project(HAL-lcd-hitachi)
 set(CMAKE_CXX_STANDARD 17)
 
 # Create a static library.
-file(GLOB SRC_FILES "*.cpp")
-add_library(HAL-lcd-hitachi ${SRC_FILES})
+add_library(HAL-lcd-hitachi AfBackConnection.hpp HConnection.hpp HDisplay.cpp HDisplay.hpp HMCPConnection.hpp)
 
