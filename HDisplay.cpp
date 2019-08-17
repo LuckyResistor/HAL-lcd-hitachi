@@ -91,9 +91,9 @@ uint8_t HDisplay::getAddressForPosition(uint8_t x, uint8_t y)
     // is virtual, so it can be changed for displays.
     
     // Check and limit the values into a valid range.
-    if (_layoutRows == 1 && x >= 80) {
+    if (_layoutRows == 1 && x > 79) {
         x = 79;
-    } else if (_layoutRows <= 2 && x >= 40) {
+    } else if (_layoutRows == 2 && x > 39) {
         x = 39;
     } else if (_layoutRows > 2 && x >= _layoutColumns) {
         x = _layoutColumns-1;
@@ -103,17 +103,21 @@ uint8_t HDisplay::getAddressForPosition(uint8_t x, uint8_t y)
     }
     
     // In case of a one line display, it is simple.
-    if (_layoutRows == 1) {
-        return x;
-    } else if (_layoutRows == 2) {
-        return x + (y == 0 ? 0 : 40);
+    uint8_t offset = 0;
+    if (_layoutRows == 2) {
+        if (y == 1) {
+            offset += 0x40u;
+        }
     } else {
-        // For 4 line displays, lines 3+4 are an extension of the first two lines.
-        return x + ((y & 1u) == 0 ? 0 : 40) + ((y & 2u) == 0 ? 0 : _layoutColumns);
+        // For 4 line displays, line 3+4 are the continuation of line 1+2. Therefore, the line offsets
+        // are 0, 0x40 / 20, 0x40+20.
+        if ((y & 0b10u) != 0) offset += 20;
+        if ((y & 0b01u) != 0) offset += 0x40u;
     }
+    return x + offset;
 }
 
-    
+
 HDisplay::Status HDisplay::reset()
 {
     // Just call the other methods.
