@@ -136,15 +136,15 @@ public: // Implement HConnection
     
     Status sendCommand(uint8_t command) override {
         _currentOutput.clearFlag(tRsPin);
-        sendBits(command >> 4);
-        sendBits(command & 0b00001111);
+        sendBits(command >> 4u);
+        sendBits(command & 0b00001111u);
         return Status::Success;
     }
     
     Status sendData(uint8_t data) override {
         _currentOutput.setFlag(tRsPin);
-        sendBits(data >> 4);
-        sendBits(data & 0b00001111);
+        sendBits(data >> 4u);
+        sendBits(data & 0b00001111u);
         return Status::Success;
     }
     
